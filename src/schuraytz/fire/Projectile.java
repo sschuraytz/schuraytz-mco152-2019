@@ -1,4 +1,4 @@
-package com.company;
+package schuraytz.fire;
 
 public class Projectile {
 
