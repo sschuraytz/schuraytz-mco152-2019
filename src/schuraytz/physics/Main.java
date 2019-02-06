@@ -1,4 +1,4 @@
-package schuraytz.fire;
+package schuraytz.physics;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +19,9 @@ public class Main {
         for (int sec = 0; sec <= TOTAL_SEC; sec++) {
             int totalCount = rand.nextInt(5);
             for (int counter = 0; counter <= totalCount; counter++) {
-                Projectile pr = new Projectile((MIN_VELOCITY + (MAX_VELOCITY - MIN_VELOCITY) * rand.nextDouble()), (MIN_DEGREE + (MAX_DEGREE - MIN_DEGREE) * rand.nextDouble()));
+                Projectile pr = new Projectile(
+                        (MIN_VELOCITY + (MAX_VELOCITY - MIN_VELOCITY) * rand.nextDouble()),
+                        (MIN_DEGREE + (MAX_DEGREE - MIN_DEGREE) * rand.nextDouble()));
                 projectileList.add(pr);
             }
             for (Projectile p : projectileList) {
