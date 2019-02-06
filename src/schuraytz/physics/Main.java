@@ -8,17 +8,22 @@ public class Main {
     public static void main(String[] args) {
 
         Random rand = new Random();
+        final int MIN_VELOCITY = 50;
+        final int MAX_VELOCITY = 120;
+        final int MIN_DEGREE = 30;
+        final int MAX_DEGREE = 150;
+        final int TOTAL_SEC = 120;
 
         ArrayList<Projectile> projectileList = new ArrayList<>();
 
-        for (int sec = 0; sec <= 120; sec++) {
+        for (int sec = 0; sec <= TOTAL_SEC; sec++) {
             int totalCount = rand.nextInt(5);
             for (int counter = 0; counter <= totalCount; counter++) {
-                Projectile pr = new Projectile((50 + (120 - 50) * rand.nextDouble()), (30 + (150 - 30) * rand.nextDouble()));
+                Projectile pr = new Projectile((MIN_VELOCITY + (MAX_VELOCITY - MIN_VELOCITY) * rand.nextDouble()), (MIN_DEGREE + (MAX_DEGREE - MIN_DEGREE) * rand.nextDouble()));
                 projectileList.add(pr);
             }
-            for (int ix = 0; ix <= (projectileList.size() - 1); ix++) {
-                projectileList.get(ix).addTime(1);
+            for (Projectile p : projectileList) {
+                p.addTime(1);
             }
         }
         for (int ix = 0; ix <= (projectileList.size() - 1); ix++) {

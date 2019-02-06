@@ -26,6 +26,5 @@ public class Projectile {
     @Override
     public String toString() {
         return "seconds since launch: " + time + " \t\tx:  " + getX() + "\t\t\t\ty:  " + getY();
-        //return "Launched " + time + " seconds ago:    x: " + getX() + "   y: " + getY();
     }
 }
