@@ -1,4 +1,4 @@
-package schuraytz.fire;
+package schuraytz.physics;
 
 public class Projectile {
 
