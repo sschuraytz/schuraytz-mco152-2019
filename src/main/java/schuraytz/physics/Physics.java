@@ -3,7 +3,7 @@ package schuraytz.physics;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Main {
+public class Physics {
 
     public static void main(String[] args) {
 
@@ -14,7 +14,7 @@ public class Main {
         final int MAX_DEGREE = 150;
         final int TOTAL_SEC = 120;
 
-        ArrayList<Projectile> projectileList = new ArrayList<>();
+        ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 
         for (int sec = 0; sec <= TOTAL_SEC; sec++) {
             int totalCount = rand.nextInt(5);
