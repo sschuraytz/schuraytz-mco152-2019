@@ -29,14 +29,9 @@ public class Dictionary {
 
     public boolean isPalindrome (String word) {
 
-        word.toUpperCase();
         String reversed = new StringBuilder(word).reverse().toString();
 
-        if (word.compareTo(reversed) == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return word.equalsIgnoreCase(reversed);
     }
 
     // return all the palindromes in the dictionary
