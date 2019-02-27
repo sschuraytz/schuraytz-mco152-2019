@@ -1,3 +1,9 @@
+//tests are divided into 3 parts - each test method only tests one thing
+// 1) given - set up the parameters of test
+// 2) when - actually trigger thing you want to test (2-3 lines)
+// 3) then - put in all your assertions to check it did what you think it did
+// do not use keyword "assert" in tests
+
 package test.schuraytz.physics;
 
 import org.junit.Test;
@@ -26,9 +32,3 @@ class ProjectileTest {
     }
 
 }
-
-//tests are divided into 3 parts - each test method only tests one thing
-// 1) given - set up the parameters of test
-// 2) when - actually trigger thing you want to test (2-3 lines)
-// 3) then - put in all your assertions to check it did what you think it did
-// do not use keyword "assert" in tests

@@ -11,13 +11,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class dictionaryTest {
+public class DictionaryTest {
 
     @Test
     /* this test works b/c I created a small file with only 3 words (2 palindromes) & tested that to be sure
     the functionality works before applying it to the large dictionary file
     */
-    public void get_dict_palindromes() throws FileNotFoundException {
+    public void getPalindromes() throws FileNotFoundException {
         //given
         Dictionary dictionary = new Dictionary("C://Users//SB//Documents//LCW//Semester 4 (Spring 2019)//Methodology//simpleDictionary.txt");
 
@@ -31,7 +31,7 @@ public class dictionaryTest {
     }
 
     @Test
-    public void is_palindrome() throws FileNotFoundException {
+    public void isPalindrome() throws FileNotFoundException {
 
         //given
         Dictionary dictionary = new Dictionary();
@@ -43,7 +43,7 @@ public class dictionaryTest {
     }
 
     @Test
-    public void is_not_palindrome() throws FileNotFoundException {
+    public void isPalindrome_false() throws FileNotFoundException {
 
         //given
         Dictionary dictionary = new Dictionary();
@@ -55,7 +55,7 @@ public class dictionaryTest {
     }
 
     @Test
-    public void contains_true() throws FileNotFoundException {
+    public void contains() throws FileNotFoundException {
 
         // given
         Dictionary dictionary = new Dictionary();
@@ -79,7 +79,7 @@ public class dictionaryTest {
     }
 
     @Test
-    public void contains_true_mixed_case() throws FileNotFoundException {
+    public void contains_mixedCase() throws FileNotFoundException {
 
         // given
         Dictionary dictionary = new Dictionary();
@@ -91,7 +91,7 @@ public class dictionaryTest {
     }
 
     @Test
-    public void get_size() throws FileNotFoundException {
+    public void size() throws FileNotFoundException {
 
         //given
         Dictionary dictionary = new Dictionary();
