@@ -9,17 +9,18 @@ public class Dictionary {
 
    private ArrayList<String> list = new ArrayList();
 
+    public Dictionary(String path) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(path));
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+            list.add(word);
+            scanner.nextLine();
+        }
+        scanner.close();
+    }
 
     public Dictionary() throws FileNotFoundException {
-            String path = "C://Users//SB//Documents//LCW//Semester 4 (Spring 2019)//Methodology//simpleDictionary.txt";
-            // String path = "dictionary.txt";
-            Scanner scanner = new Scanner(new File(path));
-            while (scanner.hasNext()) {
-                String word = scanner.next();
-                list.add(word);
-                scanner.nextLine();
-            }
-            scanner.close();
+            this("dictionary.txt");
     }
 
     public boolean contains (String word){

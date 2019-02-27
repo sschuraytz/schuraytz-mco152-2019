@@ -14,7 +14,7 @@ public class Physics {
         final int MAX_DEGREE = 150;
         final int TOTAL_SEC = 120;
 
-        ArrayList<Projectile> projectileList = new ArrayList<>();
+        ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 
         for (int sec = 0; sec <= TOTAL_SEC; sec++) {
             int totalCount = rand.nextInt(5);

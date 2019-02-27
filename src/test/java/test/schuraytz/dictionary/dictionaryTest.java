@@ -1,10 +1,14 @@
-package schuraytz.dictionary;
+package test.schuraytz.dictionary;
 
 import org.junit.jupiter.api.Test;
+import schuraytz.dictionary.Dictionary;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class dictionaryTest {
@@ -15,7 +19,7 @@ public class dictionaryTest {
     */
     public void get_dict_palindromes() throws FileNotFoundException {
         //given
-        Dictionary dictionary = new Dictionary();
+        Dictionary dictionary = new Dictionary("C://Users//SB//Documents//LCW//Semester 4 (Spring 2019)//Methodology//simpleDictionary.txt");
 
         //when
         ArrayList palindromes = new ArrayList();
@@ -24,17 +28,6 @@ public class dictionaryTest {
 
         //then
         assertEquals(palindromes, dictionary.getPalindromes());
-    }
-
-    @Test
-    public void get_size() throws FileNotFoundException {
-
-        //given
-        Dictionary dictionary = new Dictionary();
-        //when
-
-        //then
-        assertEquals(167964, dictionary.size());
     }
 
     @Test
@@ -95,5 +88,16 @@ public class dictionaryTest {
 
         // then
         assertTrue(dictionary.contains("WONDERful"));
+    }
+
+    @Test
+    public void get_size() throws FileNotFoundException {
+
+        //given
+        Dictionary dictionary = new Dictionary();
+        //when
+
+        //then
+        assertEquals(167964, dictionary.size());
     }
 }

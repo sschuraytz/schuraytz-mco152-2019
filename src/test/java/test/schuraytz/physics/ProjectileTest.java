@@ -1,8 +1,9 @@
-package schuraytz.physics;
+package test.schuraytz.physics;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import schuraytz.physics.Projectile;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 class ProjectileTest {
 
