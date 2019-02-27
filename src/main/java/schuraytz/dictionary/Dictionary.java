@@ -27,25 +27,11 @@ public class Dictionary {
         return list.contains(word.toUpperCase());
     }
 
-    public boolean isPalindrome (String word) {
-
-        String reversed = new StringBuilder(word).reverse().toString();
-
-        return word.equalsIgnoreCase(reversed);
-    }
-
-    // return all the palindromes in the dictionary
-    public List<String> getPalindromes () {
-        ArrayList palindromeList = new ArrayList();
-        for (String word : list) {
-            if (isPalindrome(word)) {
-                palindromeList.add(word);
-            }
-        }
-        return palindromeList;
-    }
-
     public int size() {
         return  list.size();
+    }
+
+    public List<String> getList() {
+        return list;
     }
 }
