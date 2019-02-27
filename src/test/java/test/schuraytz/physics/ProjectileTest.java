@@ -11,7 +11,7 @@ import schuraytz.physics.Projectile;
 
 import static org.junit.Assert.assertEquals;
 
-class ProjectileTest {
+public class ProjectileTest {
 
     @Test
     public void getLocationAfter3Seconds() {
