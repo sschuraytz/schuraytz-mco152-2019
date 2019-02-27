@@ -31,15 +31,11 @@ public class Dictionary {
 
         String reverse = new StringBuilder(word).reverse().toString();
 
-        char[] letters = word.toCharArray();
-        char[] reverseLetters = reverse.toCharArray();
-
-        for (char i = 0; i < letters.length; i++) {
-            if (letters[i] != reverseLetters[i]) {
-                return false;
-            }
+        if (word.compareTo(reverse) == 0) {
+            return true;
+        } else {
+            return false;
         }
-        return true;
     }
 
     // return all the palindromes in the dictionary
