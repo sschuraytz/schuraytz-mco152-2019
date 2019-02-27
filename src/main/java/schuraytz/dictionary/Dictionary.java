@@ -29,9 +29,10 @@ public class Dictionary {
 
     public boolean isPalindrome (String word) {
 
-        String reverse = new StringBuilder(word).reverse().toString();
+        word.toUpperCase();
+        String reversed = new StringBuilder(word).reverse().toString();
 
-        if (word.compareTo(reverse) == 0) {
+        if (word.compareTo(reversed) == 0) {
             return true;
         } else {
             return false;
