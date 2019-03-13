@@ -18,14 +18,14 @@ public class BananagramsTest {
     public void tryToMakeWord() {
         //given
         Dictionary dictionary = mock(Dictionary.class);     //fake dictionary; nothing in here
-        Bananagrams bananagrams = new Bananagrams();
-        String letters = "apalbcdeghiknm";
+        Bananagrams bananagrams = new Bananagrams(dictionary);
+        String letterSet = "apalbcdeghikmn";
         List<String> wordList =
                 Arrays.asList("aa", "mA", "Ab", "APPLE", "AD", "YELLOW", "cake", "MEN", "ELEMENTARY");
         doReturn(wordList).when(dictionary).getList();
 
         //when
-        List<String> list = bananagrams.tryToMakeWord(dictionary, letters);
+        List<String> list = bananagrams.tryToMakeWord(letterSet);
 
         //then
         assertEquals("[AA, MA, AB, AD, CAKE, MEN]", list.toString());

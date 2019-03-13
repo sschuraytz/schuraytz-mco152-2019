@@ -1,43 +1,57 @@
 package schuraytz.dictionary;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bananagrams {
 
-    final int NUM_OF_LETTERS = 14;
+    private Dictionary dictionary;
+    private final int NUM_OF_LETTERS = 14;
+    private ArrayList<String> wordsFound = new ArrayList<>();
 
-    public ArrayList<String> tryToMakeWord(Dictionary dictionary, String letters) {
+    public Bananagrams(Dictionary dictionary) {
+        this.dictionary = dictionary;
+    }
 
-        HashMap<String, Integer> myLetters = submitLetters(letters);
-        ArrayList<String> wordsFound = new ArrayList<>();
+    /**
+     *
+     * @param tiles
+     * @return a list of the words in the dictionary that can be created using the given tiles
+     */
+    public ArrayList<String> tryToMakeWord(String tiles) {
+
+        HashMap<String, Integer> myLetters = submitLetters(tiles);
 
         for (String word : dictionary.getList()) {
             if (word.length() <= NUM_OF_LETTERS) {
                 word = word.toUpperCase();
-                LinkedHashMap<String, Integer> theWord = submitLetters(word);
-                Iterator<String> iterator = theWord.keySet().iterator();
-                String letter;
+                HashMap<String, Integer> theWord = submitLetters(word);
 
-                while(iterator.hasNext()) {
-                    letter = iterator.next();
-                    if(myLetters.containsKey(letter) && myLetters.get(letter) >= theWord.get(letter)) {
-                        iterator.remove();
-                        if(theWord.isEmpty()) {
-                            wordsFound.add(word);
-                        }
-                    } else {
+                boolean contains = true;
+                for (String letter : theWord.keySet()) {
+                    if (!myLetters.containsKey(letter) || myLetters.get(letter) < theWord.get(letter)) {
+                        contains = false;
                         break;
                     }
+                }
+                if (contains) {
+                    wordsFound.add(word);
                 }
             }
         }
         return wordsFound;
     }
 
-    public LinkedHashMap<String, Integer> submitLetters(String letters) {
+    /**
+     *
+     * @param letters
+     * @return a HashMap where each key is a String with a letter and the mapped value is the number of times that letter
+     * appears in the String
+     */
+    public HashMap<String, Integer> submitLetters(String letters) {
         String[] letterSplit = letters.toUpperCase().split("");
 
-        LinkedHashMap<String, Integer> myLetters = new LinkedHashMap<>();
+        HashMap<String, Integer> myLetters = new HashMap<>();
         for (String letter : letterSplit) {
             myLetters.merge(letter, 1, Integer::sum);
         }
