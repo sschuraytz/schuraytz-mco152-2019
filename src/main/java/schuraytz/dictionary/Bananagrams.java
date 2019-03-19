@@ -6,7 +6,6 @@ import java.util.HashMap;
 public class Bananagrams {
 
     private Dictionary dictionary;
-    private final int NUM_OF_LETTERS = 14;
     private ArrayList<String> wordsFound = new ArrayList<>();
 
     public Bananagrams(Dictionary dictionary) {
