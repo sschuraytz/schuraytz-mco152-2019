@@ -23,7 +23,7 @@ public class Bananagrams {
         HashMap<String, Integer> myLetters = submitLetters(tiles);
 
         for (String word : dictionary.getList()) {
-            if (word.length() <= NUM_OF_LETTERS) {
+            if (word.length() <= tiles.length()) {
                 word = word.toUpperCase();
                 HashMap<String, Integer> theWord = submitLetters(word);
 
