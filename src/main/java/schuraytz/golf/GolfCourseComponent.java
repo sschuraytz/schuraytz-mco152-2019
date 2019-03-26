@@ -16,11 +16,10 @@ public class GolfCourseComponent extends JComponent {
     private static final int POLE_WIDTH = 4;
     private static final int POLE_HEIGHT = 90;
     private static final int FLAG_WIDTH = 26;
-    private static int ball_x = 0;
-    private static int ball_y = 320;
 
     BufferedImage littleCloud = createCloudBI("cloud1.png");
     BufferedImage bigCloud = createCloudBI("cloud2.png");
+    Projectile projectile = new Projectile(80, 45);
 
     @Override
     protected void paintComponent(Graphics graphics) {
@@ -37,18 +36,12 @@ public class GolfCourseComponent extends JComponent {
         drawFlag(graphics);
         drawFlagPole(graphics);
 
-        ball_y = getHeight()*2/3 - BALL_WIDTH;
-
-        for(double timer = 0; timer < 10; timer+=120) {
-            ball_x++;
-            ball_y--;
-            repaint();
-        }
+        moveBall();
     }
 
     public void drawSky(Graphics graphics) {
         Graphics2D graphics2d = (Graphics2D) graphics;
-        GradientPaint gradient = new GradientPaint (
+        GradientPaint gradient = new GradientPaint(
                 0, 0, Color.BLUE.brighter(),
                 0, 300, Color.CYAN);
         graphics2d.setPaint(gradient);
@@ -90,8 +83,8 @@ public class GolfCourseComponent extends JComponent {
             graphics.drawImage(bigCloud, x, y, null);
             x += 600;
             if (currentWidth % 2 == 0) {
-                y += 20; }
-            else {
+                y += 20;
+            } else {
                 y -= 30;
             }
             currentWidth += 101;
@@ -100,11 +93,11 @@ public class GolfCourseComponent extends JComponent {
 
     public void drawGrass(Graphics graphics) {
         Graphics2D graphics2d = (Graphics2D) graphics;
-        GradientPaint gradient = new GradientPaint (
+        GradientPaint gradient = new GradientPaint(
                 0, 0, Color.green.brighter(),
                 700, 300, Color.green.darker());
         graphics2d.setPaint(gradient);
-        graphics2d.fillRect(0, getHeight()*2/3, getWidth(), getHeight());
+        graphics2d.fillRect(0, getHeight() * 2 / 3, getWidth(), getHeight());
     }
 
     public void drawGround(Graphics graphics) {
@@ -113,9 +106,8 @@ public class GolfCourseComponent extends JComponent {
         for (int ix = 0; ix < 5; ix++) {
             if (ix % 2 == 0) {
                 graphics.setColor(new Color(100, 51, 0));
-            }
-            else {
-               graphics.setColor(new Color(64, 34, 6));
+            } else {
+                graphics.setColor(new Color(64, 34, 6));
             }
             graphics.fillRect(0, getHeight() * num++ / denom++, getWidth(), getHeight());
         }
@@ -124,18 +116,30 @@ public class GolfCourseComponent extends JComponent {
     public void drawGolfBall(Graphics graphics) {
         Graphics2D graphics2d = (Graphics2D) graphics;
         graphics2d.setPaint(Color.WHITE);
-        graphics2d.fillOval(ball_x, getHeight()*2/3 - BALL_WIDTH, BALL_WIDTH, BALL_WIDTH);
+        int ball_x = (int) projectile.getX();
+        int ball_y = getHeight()*2/3 - BALL_WIDTH + (int) -projectile.getY();
+        graphics2d.fillOval(ball_x, ball_y, BALL_WIDTH, BALL_WIDTH);
     }
 
     public void drawFlag(Graphics graphics) {
         graphics.setColor(Color.RED);
-        graphics.fillPolygon(new int[] {BALL_START_X + BALL_WIDTH + 600, BALL_START_X + BALL_WIDTH + 550, BALL_START_X + BALL_WIDTH + 600},
-                new int[] {getHeight()*2/3 - POLE_HEIGHT - FLAG_WIDTH, getHeight()*2/3 - POLE_HEIGHT, getHeight()*2/3 - POLE_HEIGHT + FLAG_WIDTH},
+        graphics.fillPolygon(new int[]{BALL_START_X + BALL_WIDTH + 600,
+                        BALL_START_X + BALL_WIDTH + 550,
+                        BALL_START_X + BALL_WIDTH + 600},
+                new int[]{getHeight() * 2 / 3 - POLE_HEIGHT - FLAG_WIDTH,
+                        getHeight() * 2 / 3 - POLE_HEIGHT,
+                        getHeight() * 2 / 3 - POLE_HEIGHT + FLAG_WIDTH},
                 3);
     }
 
     public void drawFlagPole(Graphics graphics) {
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(BALL_START_X + BALL_WIDTH + 600, getHeight()*2/3 - POLE_HEIGHT - FLAG_WIDTH, POLE_WIDTH, POLE_HEIGHT + FLAG_WIDTH);
+        graphics.setColor(new Color(229, 180, 155));
+        graphics.fillRect(BALL_START_X + BALL_WIDTH + 600, getHeight() * 2 / 3 - POLE_HEIGHT - FLAG_WIDTH, POLE_WIDTH, POLE_HEIGHT + FLAG_WIDTH);
+    }
+
+    public void moveBall() {
+        projectile.addTime(.1);
+        //while()
+        repaint();
     }
 }

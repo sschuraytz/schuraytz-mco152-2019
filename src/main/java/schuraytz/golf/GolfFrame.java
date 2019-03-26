@@ -17,28 +17,9 @@ public class GolfFrame extends JFrame {
         root.setLayout(new BorderLayout()); //lays out all our components in a way that allows up to expand & contract
         //BorderLayout is the name of the class that holds the logic that enables us to do above
 
-        JLabel north = new JLabel(new ImageIcon("flax.png"));
-        north.setBackground(Color.BLUE);
-        north.setOpaque(true);
-        root.add(north, BorderLayout.NORTH);
-
-        JLabel south = new JLabel("SOUTH");
-        south.setBackground(Color.CYAN);
-        south.setOpaque(true);
-        root.add(south, BorderLayout.SOUTH);
-
-        JLabel west = new JLabel("WEST");
-        west.setBackground(Color.GREEN);
-        west.setOpaque(true);
-        root.add(west, BorderLayout.WEST);
-
-
-        JButton center = new JButton("CENTER");
-        center.setBackground(Color.RED);
-        center.setOpaque(true);
-        root.add(center, BorderLayout.CENTER);
-
-        center.addActionListener(this::printClick);
+        //JButton center = new JButton("CENTER");
+        GolfCourseComponent golfCourseComponent = new GolfCourseComponent();
+        root.add(golfCourseComponent, BorderLayout.CENTER);
 
         //ActionListener is an interface
 
