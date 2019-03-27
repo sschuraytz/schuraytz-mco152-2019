@@ -19,7 +19,15 @@ public class GolfCourseComponent extends JComponent {
 
     BufferedImage littleCloud = createCloudBI("cloud1.png");
     BufferedImage bigCloud = createCloudBI("cloud2.png");
-    Projectile projectile = new Projectile(80, 45);
+    Projectile projectile = new Projectile(0, 0);
+
+    public GolfCourseComponent(Projectile projectile) {
+        this.projectile = projectile;
+    }
+
+    public GolfCourseComponent() {
+        new GolfCourseComponent(projectile);
+    }
 
     @Override
     protected void paintComponent(Graphics graphics) {
@@ -134,12 +142,21 @@ public class GolfCourseComponent extends JComponent {
 
     public void drawFlagPole(Graphics graphics) {
         graphics.setColor(new Color(229, 180, 155));
-        graphics.fillRect(BALL_START_X + BALL_WIDTH + 600, getHeight() * 2 / 3 - POLE_HEIGHT - FLAG_WIDTH, POLE_WIDTH, POLE_HEIGHT + FLAG_WIDTH);
+        graphics.fillRect(BALL_START_X + BALL_WIDTH + 600,
+                getHeight() * 2 / 3 - POLE_HEIGHT - FLAG_WIDTH,
+                POLE_WIDTH,
+                POLE_HEIGHT + FLAG_WIDTH);
     }
 
     public void moveBall() {
-        projectile.addTime(.1);
-        //while()
+            projectile.addTime(.1);
+            if (projectile.getY() >= 0) {
+                repaint();
+            }
+    }
+    //sets the projectile within the golf course component
+    public void setGolfBall(Projectile projectile) {
+        this.projectile = projectile;
         repaint();
     }
 }
