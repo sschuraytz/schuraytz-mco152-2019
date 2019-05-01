@@ -1,10 +1,7 @@
 package schuraytz.net;
 
-import com.google.gson.Gson;
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import retrofit2.Call;
-import retrofit2.Response;
+import io.reactivex.functions.Consumer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,6 +12,9 @@ public class DownloadUserList {
 
     // raw request to a web server; if you want to send messages to each other, you could use sockets as well
     public static void main(String[] args) throws IOException {
+
+        PhotoFrame frame = new PhotoFrame();
+        frame.setVisible(true);
 
         /*Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://jsonplaceholder.typicode.com")
@@ -52,7 +52,14 @@ public class DownloadUserList {
 
         // subscribe to what it 's returning and pipe that to System.out.println
         //make it easier to read/shorter
-        Disposable disposable = api.getPhotoList().subscribe (System.out::println);
+        Disposable disposable = api.getPhotoList().subscribe(
+                new Consumer<PhotoList>() {
+                    @Override
+                    public void accept(PhotoList photos) throws Exception {
+                        System.out.println(photos);
+                    }
+                }
+            );
 
       /*  AlbumList album = api.getAlbumList();
         System.out.println(album);*/
