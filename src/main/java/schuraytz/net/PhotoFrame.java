@@ -4,6 +4,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,65 +14,67 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class PhotoFrame extends JFrame {
 
     private final JPanel controls = new JPanel();
-    private JLabel photoCounterLabel = new JLabel("1");
     private PhotoList photoList;
-    int photoCounter = 1;
-    private final JLabel imageLabel = new JLabel();
-    private final JButton leftButton = new BasicArrowButton(BasicArrowButton.WEST);
-    private final JButton rightButton = new BasicArrowButton(BasicArrowButton.EAST);
+    private int photoCounter = 1;
+    private final JLabel PHOTO_COUNTER_LABEL = new JLabel("1");
+    private final JLabel IMAGE_LABEL = new JLabel();
+    private final JLabel IMAGE_TITLE_LABEL = new JLabel();
+    private final JButton LEFT_BUTTON = new BasicArrowButton(BasicArrowButton.WEST);
+    private final JButton RIGHT_BUTTON = new BasicArrowButton(BasicArrowButton.EAST);
+    private final JList TITLE_LIST = new JList();
 
-
-    public PhotoFrame() throws MalformedURLException {
+    public PhotoFrame() {
         setTitle("PHOTOS");
-        setSize(400, 400);
+        setSize(1200, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel root = new JPanel();
         root.setLayout(new BorderLayout());
 
-        root.add(imageLabel, BorderLayout.CENTER);
-        root.add(controls, BorderLayout.SOUTH);
-        controls.add(leftButton);
-        controls.add(photoCounterLabel);
-        controls.add(rightButton);
+        root.add(IMAGE_TITLE_LABEL, BorderLayout.NORTH);
+        root.add(IMAGE_LABEL, BorderLayout.CENTER);
+        controls.add(LEFT_BUTTON);
+        controls.add(PHOTO_COUNTER_LABEL);
+        controls.add(RIGHT_BUTTON);
         root.add(controls, BorderLayout.SOUTH);
 
         setContentPane(root);
 
-        rightButton.addActionListener(new ActionListener() {
+        RIGHT_BUTTON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                photoCounter++;
-                photoCounterLabel.setText(String.valueOf(photoCounter));
-                loadPic();
+                if (photoCounter < photoList.size()) {
+                    photoCounter++;
+                    loadPicAndTitle();
+                }
             }
         });
 
-        leftButton.addActionListener(new ActionListener() {
+        LEFT_BUTTON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (photoCounter > 1) {
                     photoCounter--;
-                    photoCounterLabel.setText(String.valueOf(photoCounter));
-                   loadPic();
+                    loadPicAndTitle();
                 }
             }
         });
 
-
         JsonPlaceholderClient client = new JsonPlaceholderClient();
         Disposable disposable = client.getPhotoList()
                 .subscribe(new Consumer<PhotoList>() {
-                    @Override
-                    public void accept(PhotoList photos) throws Exception {
-                        photoList = photos;
-                        loadPic();
-                    }
-                }
+                               @Override
+                               public void accept(PhotoList photos) throws Exception {
+                                   photoList = photos;
+                                   loadPicAndTitle();
+                                   root.add(listScrollerSetUp(), BorderLayout.EAST);
+                               }
+                           }
                 );
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -81,19 +85,45 @@ public class PhotoFrame extends JFrame {
     });
     }
 
-
-    public void loadPic() {
+    public void loadPicAndTitle() {
         String photoUrl = photoList.get(photoCounter - 1).getUrl();
+        String photoTitle = photoList.get(photoCounter - 1).getTitle();
         try {
-            imageLabel.setIcon(new ImageIcon(new URL(photoUrl)));
+            IMAGE_LABEL.setIcon(new ImageIcon(new URL(photoUrl)));
+            IMAGE_TITLE_LABEL.setText(photoTitle);
+            PHOTO_COUNTER_LABEL.setText(String.valueOf(photoCounter));
+            TITLE_LIST.setSelectedIndex(photoCounter - 1);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
 
+    public Object[] loadTitles() {
+        ArrayList<String> photoTitles = new ArrayList<>();
+        for (Photo photo : photoList) {
+            photoTitles.add(photo.getTitle());
+        }
+        Object[] hi = photoTitles.toArray();
+        return hi;
+    }
+
+    public JScrollPane listScrollerSetUp() {
+        TITLE_LIST.setListData(loadTitles());
+        TITLE_LIST.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()){
+                    JList source = (JList) event.getSource();
+                    photoCounter = source.getSelectedIndex() + 1;
+                    loadPicAndTitle();
+                }
+            }
+        });
+        JScrollPane listScroller = new JScrollPane(TITLE_LIST);
+        return listScroller;
     }
 
     public static void main(String[] args) throws MalformedURLException {
         new PhotoFrame().setVisible(true);
     }
-
 }
