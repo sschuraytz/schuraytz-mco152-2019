@@ -16,12 +16,12 @@ public class PhotoFrame extends JFrame {
     private final JPanel controls = new JPanel();
     private PhotoList photoList;
     private int photoCounter = 1;
-    private final JLabel PHOTO_COUNTER_LABEL = new JLabel("1");
-    private final JLabel IMAGE_LABEL = new JLabel();
-    private final JLabel IMAGE_TITLE_LABEL = new JLabel();
-    private final JButton LEFT_BUTTON = new BasicArrowButton(BasicArrowButton.WEST);
-    private final JButton RIGHT_BUTTON = new BasicArrowButton(BasicArrowButton.EAST);
-    private final JList TITLE_LIST = new JList();
+    private final JLabel photoCounterLabel = new JLabel("1");
+    private final JLabel imageLabel = new JLabel();
+    private final JLabel imageTitleLabel = new JLabel();
+    private final JButton leftButton = new BasicArrowButton(BasicArrowButton.WEST);
+    private final JButton rightButton = new BasicArrowButton(BasicArrowButton.EAST);
+    private final JList titleList = new JList();
 
     public PhotoFrame() {
         setTitle("PHOTOS");
@@ -31,23 +31,23 @@ public class PhotoFrame extends JFrame {
         JPanel root = new JPanel();
         root.setLayout(new BorderLayout());
 
-        root.add(IMAGE_TITLE_LABEL, BorderLayout.NORTH);
-        root.add(IMAGE_LABEL, BorderLayout.CENTER);
-        controls.add(LEFT_BUTTON);
-        controls.add(PHOTO_COUNTER_LABEL);
-        controls.add(RIGHT_BUTTON);
+        root.add(imageTitleLabel, BorderLayout.NORTH);
+        root.add(imageLabel, BorderLayout.CENTER);
+        controls.add(leftButton);
+        controls.add(photoCounterLabel);
+        controls.add(rightButton);
         root.add(controls, BorderLayout.SOUTH);
 
         setContentPane(root);
 
-        RIGHT_BUTTON.addActionListener(actionEvent -> {
+        rightButton.addActionListener(actionEvent -> {
             if (photoCounter < photoList.size()) {
                 photoCounter++;
                 loadPicAndTitle();
             }
         });
 
-        LEFT_BUTTON.addActionListener(actionEvent -> {
+        leftButton.addActionListener(actionEvent -> {
             if (photoCounter > 1) {
                 photoCounter--;
                 loadPicAndTitle();
@@ -64,7 +64,7 @@ public class PhotoFrame extends JFrame {
                 );
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                //dispose disposable when closing the  window
+                //dispose disposable when closing the window
                 disposable.dispose();
             }
 
@@ -75,34 +75,34 @@ public class PhotoFrame extends JFrame {
         String photoUrl = photoList.get(photoCounter - 1).getUrl();
         String photoTitle = photoList.get(photoCounter - 1).getTitle();
         try {
-            IMAGE_LABEL.setIcon(new ImageIcon(new URL(photoUrl)));
-            IMAGE_TITLE_LABEL.setText(photoTitle);
-            PHOTO_COUNTER_LABEL.setText(String.valueOf(photoCounter));
-            TITLE_LIST.setSelectedIndex(photoCounter - 1);
+            imageLabel.setIcon(new ImageIcon(new URL(photoUrl)));
+            imageTitleLabel.setText(photoTitle);
+            photoCounterLabel.setText(String.valueOf(photoCounter));
+            titleList.setSelectedIndex(photoCounter - 1);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
-    public Object[] loadTitles() {
+    public String[] loadTitles() {
         ArrayList<String> photoTitles = new ArrayList<>();
         for (Photo photo : photoList) {
             photoTitles.add(photo.getTitle());
         }
-        Object[] photoTitlesArray = photoTitles.toArray();
+        String[] photoTitlesArray = photoTitles.toArray(new String[0]);
         return photoTitlesArray;
     }
 
     public JScrollPane listScrollerSetUp() {
-        TITLE_LIST.setListData(loadTitles());
-        TITLE_LIST.addListSelectionListener(event -> {
+        titleList.setListData(loadTitles());
+        titleList.addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting()){
                 JList source = (JList) event.getSource();
                 photoCounter = source.getSelectedIndex() + 1;
                 loadPicAndTitle();
             }
         });
-        JScrollPane listScroller = new JScrollPane(TITLE_LIST);
+        JScrollPane listScroller = new JScrollPane(titleList);
         return listScroller;
     }
 
