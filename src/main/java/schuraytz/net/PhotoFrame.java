@@ -1,15 +1,10 @@
 package schuraytz.net;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.MalformedURLException;
@@ -45,36 +40,27 @@ public class PhotoFrame extends JFrame {
 
         setContentPane(root);
 
-        RIGHT_BUTTON.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (photoCounter < photoList.size()) {
-                    photoCounter++;
-                    loadPicAndTitle();
-                }
+        RIGHT_BUTTON.addActionListener(actionEvent -> {
+            if (photoCounter < photoList.size()) {
+                photoCounter++;
+                loadPicAndTitle();
             }
         });
 
-        LEFT_BUTTON.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (photoCounter > 1) {
-                    photoCounter--;
-                    loadPicAndTitle();
-                }
+        LEFT_BUTTON.addActionListener(actionEvent -> {
+            if (photoCounter > 1) {
+                photoCounter--;
+                loadPicAndTitle();
             }
         });
 
         JsonPlaceholderClient client = new JsonPlaceholderClient();
         Disposable disposable = client.getPhotoList()
-                .subscribe(new Consumer<PhotoList>() {
-                               @Override
-                               public void accept(PhotoList photos) throws Exception {
-                                   photoList = photos;
-                                   loadPicAndTitle();
-                                   root.add(listScrollerSetUp(), BorderLayout.EAST);
-                               }
-                           }
+                .subscribe(photos -> {
+                    photoList = photos;
+                    loadPicAndTitle();
+                    root.add(listScrollerSetUp(), BorderLayout.EAST);
+                }
                 );
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -109,21 +95,18 @@ public class PhotoFrame extends JFrame {
 
     public JScrollPane listScrollerSetUp() {
         TITLE_LIST.setListData(loadTitles());
-        TITLE_LIST.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()){
-                    JList source = (JList) event.getSource();
-                    photoCounter = source.getSelectedIndex() + 1;
-                    loadPicAndTitle();
-                }
+        TITLE_LIST.addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting()){
+                JList source = (JList) event.getSource();
+                photoCounter = source.getSelectedIndex() + 1;
+                loadPicAndTitle();
             }
         });
         JScrollPane listScroller = new JScrollPane(TITLE_LIST);
         return listScroller;
     }
 
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) {
         new PhotoFrame().setVisible(true);
     }
 }
