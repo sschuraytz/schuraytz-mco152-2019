@@ -103,8 +103,8 @@ public class PhotoFrame extends JFrame {
         for (Photo photo : photoList) {
             photoTitles.add(photo.getTitle());
         }
-        Object[] hi = photoTitles.toArray();
-        return hi;
+        Object[] photoTitlesArray = photoTitles.toArray();
+        return photoTitlesArray;
     }
 
     public JScrollPane listScrollerSetUp() {
